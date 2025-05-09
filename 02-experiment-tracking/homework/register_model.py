@@ -12,7 +12,7 @@ HPO_EXPERIMENT_NAME = "random-forest-hyperopt"
 EXPERIMENT_NAME = "random-forest-best-models"
 RF_PARAMS = ['max_depth', 'n_estimators', 'min_samples_split', 'min_samples_leaf', 'random_state']
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri("http://127.0.0.1:5003")
 mlflow.set_experiment(EXPERIMENT_NAME)
 mlflow.sklearn.autolog()
 
@@ -27,7 +27,7 @@ def train_and_log_model(data_path, params):
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
     X_test, y_test = load_pickle(os.path.join(data_path, "test.pkl"))
 
-    with mlflow.start_run():
+    with mlflow.start_run(run_name="RandomForest"):
         new_params = {}
         for param in RF_PARAMS:
             new_params[param] = int(params[param])
@@ -54,7 +54,8 @@ def train_and_log_model(data_path, params):
     type=int,
     help="Number of top models that need to be evaluated to decide which one to promote"
 )
-def run_register_model(data_path: str, top_n: int):
+
+def run_register_model(data_path: str = "./output",  top_n: int = 1):
 
     client = MlflowClient()
 
@@ -68,13 +69,20 @@ def run_register_model(data_path: str, top_n: int):
     )
     for run in runs:
         train_and_log_model(data_path=data_path, params=run.data.params)
+    
 
     # Select the model with the lowest test RMSE
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
-    # best_run = client.search_runs( ...  )[0]
+    best_run = client.search_runs(
+        experiment_ids=experiment.experiment_id,
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=top_n,
+        order_by=["metrics.rmse ASC"])[0]
 
     # Register the best model
-    # mlflow.register_model( ... )
+    run_id = best_run.info.run_id
+    model_uri = f"runs:/{run_id}/model"
+    mlflow.register_model(model_uri=model_uri, name="random-forest-best-model")
 
 
 if __name__ == '__main__':
