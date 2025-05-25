@@ -174,3 +174,6 @@ cython_debug/
 .pypirc
 
 mlartifacts/03-orchestration/
+.DS_Store
+04-deployment/.DS_Store
+04-deployment/web-service-mlflow/mlartifacts/
