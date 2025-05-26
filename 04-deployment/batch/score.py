@@ -91,8 +91,8 @@ def run():
     input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet'
     output_file = f'output/{taxi_type}/{year:04d}-{month:02d}.parquet'
 
-    # RUN_ID = '33d91be4d8184963b8648d4419ef6507' 
-    run_id = sys.argv[4] # 33d91be4d8184963b8648d4419ef6507
+    # RUN_ID = 'bd78dddba6764497b0dd54d9fe56b27a' 
+    run_id = sys.argv[4] 
 
     apply_model(input_file=input_file, 
                 run_id=run_id, 
