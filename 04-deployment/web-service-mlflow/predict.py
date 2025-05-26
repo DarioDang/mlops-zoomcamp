@@ -1,22 +1,19 @@
 import pickle 
 import mlflow
+import os 
 from mlflow.tracking import MlflowClient
 from flask import Flask, request, jsonify
 
 
-MLFLOW_TRACKING_URI = 'http://127.0.0.1:5000/'
-RUN_ID = '25c0958b9a03453eb4ec695278c383f5'
+#MLFLOW_TRACKING_URI = 'http://127.0.0.1:5000/'
+#mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
 
-path = client.download_artifacts(run_id = RUN_ID, path='dict_vectorizer.bin')
-print(f'downloading the dict vectorizer to {path}')
+# RUN_ID = '33d91be4d8184963b8648d4419ef6507' 
+RUN_ID = os.getenv('RUN_ID')
 
-with open(path, 'rb') as f_out:
-    dv = pickle.load(f_out)
-
-logged_model = f'runs:/{RUN_ID}/model'
+logged_model = f'mlartifacts/1/{RUN_ID}/artifacts/model'
+#logged_model = f'runs:/{RUN_ID}/model'
 
 # Load model as a PyFuncModel.
 model = mlflow.pyfunc.load_model(logged_model)
