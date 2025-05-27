@@ -102,6 +102,8 @@ def run():
 if __name__ == "__main__":
     run()
 
+# To run the prediction: python [filename.py] [taxi_type] [year] [month] [run_id]
+
 
 
 
