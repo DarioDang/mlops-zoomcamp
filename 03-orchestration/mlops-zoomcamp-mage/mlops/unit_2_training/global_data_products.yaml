@@ -1,0 +1,9 @@
+training_set_1:
+  object_type: pipeline
+  object_uuid: data_preparation
+  outdated_after:
+    seconds: 600
+  project: unit_2_training
+  repo_path: /workspaces/mlops-zoomcamp-mage/mlops/unit_2_training
+  settings:
+    build: {}
