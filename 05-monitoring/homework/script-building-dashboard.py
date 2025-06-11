@@ -27,14 +27,14 @@ for day, day_df in df.groupby('pickup_date'):
     except KeyError:
         continue  # skip invalid days
 
-# Create test_db if it doesn't exist
+# Create postgres_db if it doesn't exist
 with psycopg.connect("host=localhost port=5433 user=postgres password=root", autocommit=True) as conn:
-    res = conn.execute("SELECT 1 FROM pg_database WHERE datname = 'test_db'")
+    res = conn.execute("SELECT 1 FROM pg_database WHERE datname = 'postgres_db'")
     if len(res.fetchall()) == 0:
-        conn.execute("CREATE DATABASE test_db")
+        conn.execute("CREATE DATABASE postgres_db")
 
-# Now connect to test_db and create table
-with psycopg.connect("host=localhost port=5433 dbname=test_db user=postgres password=root", autocommit=True) as conn:
+# Now connect to postgres_db and create table
+with psycopg.connect("host=localhost port=5433 dbname=postgres_db user=postgres password=root", autocommit=True) as conn:
     with conn.cursor() as cur:
         # Create table
         cur.execute("""
@@ -52,4 +52,4 @@ with psycopg.connect("host=localhost port=5433 dbname=test_db user=postgres pass
                 ON CONFLICT (pickup_date) DO UPDATE SET median_fare = EXCLUDED.median_fare
             """, (day, median))
 
-print(" Median fare data saved to PostgreSQL (test_db).")
+print(" Median fare data saved to PostgreSQL (postgres_db).")

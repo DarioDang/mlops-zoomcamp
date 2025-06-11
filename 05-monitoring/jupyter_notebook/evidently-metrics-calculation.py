@@ -62,10 +62,10 @@ report = Report(metrics=[
 def prep_db():
     "Write a function to configure the database"
     with psycopg.connect(" host=localhost port =5433 user=postgres password =root", autocommit=True) as conn:
-        res = conn.execute("SELECT 1 FROM pg_database WHERE datname = 'test_db'")
+        res = conn.execute("SELECT 1 FROM pg_database WHERE datname = 'postgres_db'")
         if len(res.fetchall()) == 0:
-            conn.execute("CREATE DATABASE test_db")
-        with psycopg.connect("host=localhost  port =5433 dbname =test_db user=postgres password =root") as conn:
+            conn.execute("CREATE DATABASE postgres_db")
+        with psycopg.connect("host=localhost  port =5433 dbname =postgres_db user=postgres password =root") as conn:
             conn.execute(create_table_statement)
 
 
@@ -94,7 +94,7 @@ def calculate_metrics_postgresql(i):
     num_drifted_columns = result['metrics'][1]['result']['number_of_drifted_columns']
     share_missing_values = result['metrics'][2]['result']['current']['share_of_missing_values']
 
-    with psycopg.connect("host=localhost port=5433 dbname=test_db user=postgres password=root", autocommit=True) as conn:
+    with psycopg.connect("host=localhost port=5433 dbname=postgres_db user=postgres password=root", autocommit=True) as conn:
         with conn.cursor() as curr:
             curr.execute(
                 "INSERT INTO dummy_metrics (timestamp, prediction_drift, num_drifted_columns, share_missing_values) "
