@@ -177,3 +177,4 @@ mlartifacts/03-orchestration/
 .DS_Store
 04-deployment/.DS_Store
 04-deployment/web-service-mlflow/mlartifacts/
+05-monitoring/monthly-drift-pipeline.py
