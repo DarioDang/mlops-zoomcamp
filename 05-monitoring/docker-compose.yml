@@ -1,0 +1,47 @@
+version: '3.7' # Define the version of the Docker Compose file format
+
+# This file defines the services, networks, and volumes for the monitoring stack
+volumes: 
+  grafana_data: {}
+
+# Define the networks used by the services
+networks: 
+  front-tier: 
+  back-tier: 
+
+# Define the services that will be run in containers
+services: 
+  db: 
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    networks:
+      - back-tier 
+
+  # Define the adminer service for database management
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - back-tier
+      - front-tier
+
+  # Define the Grafana service for monitoring and visualization
+  grafana:
+    image: grafana/grafana
+    user: "472"   # Use the Grafana user ID to avoid permission issues
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro # Mount the Grafana datasource configuration
+      - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./dashboards:/opt/grafana/dashboards
+    networks:
+      - back-tier  # Connect Grafana to the back-tier network
+      - front-tier # Connect Grafana to the front-tier network 
+    restart: always
