@@ -179,3 +179,9 @@ mlartifacts/03-orchestration/
 04-deployment/web-service-mlflow/mlartifacts/
 05-monitoring/monthly-drift-pipeline.py
 04-deployment/streaming/
+05-monitoring/dashboards/monthly_drift.json
+06-best-practices/aws_credential.yaml
+06-best-practices/code/README.md 
+06-best-practices/integration-tests/README.md
+06-best-practices/tests/Pipfile
+06-best-practices/tests/Pipfile.lock
