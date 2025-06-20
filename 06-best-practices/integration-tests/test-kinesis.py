@@ -1,7 +1,9 @@
-import os 
-import boto3
+# pylint: disable=duplicate-code
+import os
 import json
 from pprint import pprint
+
+import boto3
 from deepdiff import DeepDiff
 
 # Configure the endpoint using boto3
@@ -9,21 +11,21 @@ kinesis_endpoint = os.getenv('KINESIS_ENDPOINT_URL', "http://localhost:4566")
 kinesis_client = boto3.client('kinesis', endpoint_url=kinesis_endpoint)
 
 stream_name = os.getenv('PREDICTIONS_STREAM_NAME', 'ride_predictions')
-shard_id = 'shardId-000000000000'
+SHARD_ID = 'shardId-000000000000'
 
 # Get the Shard Iterator with TRIM_HORIZON to read from the beginning of the stream
 shard_iterator_response = kinesis_client.get_shard_iterator(
-    StreamName = stream_name,
-    ShardId = shard_id,
-    ShardIteratorType = 'TRIM_HORIZON',
+    StreamName=stream_name,
+    ShardId=SHARD_ID,
+    ShardIteratorType='TRIM_HORIZON',
 )
 
 shard_iterator_id = shard_iterator_response['ShardIterator']
 
 # Read records from the stream
 records_response = kinesis_client.get_records(
-    ShardIterator = shard_iterator_id,
-    Limit = 1
+    ShardIterator=shard_iterator_id,
+    Limit=1,
 )
 
 records = records_response['Records']
@@ -42,8 +44,8 @@ expected_records = {
     'version': '3ec150b70a5549769f4acd9bc09da04b',
     'prediction': {
         'ride_duration': 18.18,
-        'ride_id': 256
-    }
+        'ride_id': 256,
+    },
 }
 
 # Test for the different fields in the response

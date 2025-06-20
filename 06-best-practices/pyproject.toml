@@ -5,7 +5,18 @@ disable = [
     "C0115",  # missing-class-docstring
     "W0613",  # unused-argument
     "C0304",  # missing-final-newline
+    "C0413",  # wrong-import-position
     "R0903",  # too-few-public-methods
     "W0611",  # unused-import
+    "C0103",  # invalid-name
 ]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+skip-string-normalization = true 
+
+[tool.isort]
+multi_line_output = 3
+length_sort = true
 
