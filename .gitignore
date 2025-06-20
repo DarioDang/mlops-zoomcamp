@@ -177,6 +177,7 @@ mlartifacts/03-orchestration/
 .DS_Store
 04-deployment/.DS_Store
 04-deployment/web-service-mlflow/mlartifacts/
+04-deployment/web-service-mlflow/mlruns
 05-monitoring/monthly-drift-pipeline.py
 04-deployment/streaming/
 05-monitoring/dashboards/monthly_drift.json
@@ -185,3 +186,4 @@ mlartifacts/03-orchestration/
 06-best-practices/integration-tests/README.md
 06-best-practices/tests/Pipfile
 06-best-practices/tests/Pipfile.lock
+06-best-practices/code/Pipfile.lock
