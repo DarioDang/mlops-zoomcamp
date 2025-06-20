@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boto3 = "*"
+mlflow = "*"
+xgboost = "*"
+numpy = "*"
+pandas = "*"
+ipykernel = "*"
+scikit-learn = "*"
+pylint = "*"
+
+[dev-packages]
+pytest = "*"
+deepdiff = "*"
+pylint = "==2.14.4"
+black = "*"
+isort = "*"
+
+[requires]
+python_version = "3.9.12"
