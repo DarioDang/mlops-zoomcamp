@@ -187,3 +187,5 @@ mlartifacts/03-orchestration/
 06-best-practices/tests/Pipfile
 06-best-practices/tests/Pipfile.lock
 06-best-practices/code/Pipfile.lock
+06-best-practices/code/infrastructure/.terraform.lock.hcl
+06-best-practices/code/infrastructure/.terraform
