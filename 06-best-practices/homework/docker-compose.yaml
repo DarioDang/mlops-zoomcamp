@@ -1,0 +1,23 @@
+
+services:
+  localstack:
+    image: localstack/localstack 
+    ports:
+      - "4566:4566"  # LocalStack edge port
+    environment:
+      - SERVICES=s3
+
+# Step 01: Run the docker compose : docker-compose up - d
+# Step 02: Configure AWS CLI to use LocalStack: aws configure
+  # Access Key ID: test
+  # Secret Access Key: test
+  # Region: us-east-1
+  # Output format: json
+# Step 03: Set the endpoint URL for localstack in your environment:
+    # export AWS_ACCESS_KEY_ID=test
+    # export AWS_SECRET_ACCESS_KEY=test
+    # export AWS_DEFAULT_REGION=us-east-1
+    # export LOCALSTACK_ENDPOINT="http://localhost:4566"
+
+# Step 04: Create the bucket : aws --endpoint-url=$LOCALSTACK_ENDPOINT s3 mb s3://nyc-duration
+# Step 05: Verify the bucket : aws --endpoint-url=$LOCALSTACK_ENDPOINT s3 ls
